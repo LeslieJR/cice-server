@@ -6,6 +6,7 @@ const passport = require('passport');
 
 router.post('/sign-up', controllers.user.signup);
 router.post('/sign-in', controllers.user.signin);
+router.post('/:user_id/details', controllers.user.addDetails)
 
 //auth with google
 router.get('/google', passport.authenticate('google', {

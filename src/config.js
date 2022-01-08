@@ -1,6 +1,6 @@
 const config = { 
     database:{
-        uri:'mongodb://localhost/eco-shop'
+        uri:'mongodb://localhost/'
     },
     server:{
         port: process.env.PORT ?? 4400,

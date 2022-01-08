@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 const config = require('./config')
-
-mongoose.connect(config.database.uri)
-  .then(()=>{
-      console.log('Connection to DB successful')
-  })
-  .catch((err)=>{
-      console.log('error: '+err.message)
-  })
-
+const dbname = config.database.uri
+const options = {
+   useNewUrlParser: true, 
+   useUnifiedTopology: true
+}
+mongoose.connect(dbname, options)
+.then(()=>{
+ console.log('Connection was successful') 
+})
+.catch((err)=>{
+ console.log('there was an error',err);
+})
