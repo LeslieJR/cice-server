@@ -23,7 +23,16 @@ const create = async (req, res) => {
 
 const getAll =  async (req, res) => {
   try {
-    const products = await models.product.find();
+    const products = await models.product.find().populate('category_id');
+    return res.status(200).json(products);
+  } catch (e) {
+    console.log("error: ", e.message);
+  }
+};
+
+const getByCategory = async (req, res) => {
+  try {
+    // TO DO
     return res.status(200).json(products);
   } catch (e) {
     console.log("error: ", e.message);
@@ -47,5 +56,6 @@ const remove = async (req, res) => {
 module.exports = {
   create,
   getAll,
+  getByCategory,
   remove
 };

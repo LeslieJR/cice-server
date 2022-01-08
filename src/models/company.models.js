@@ -8,7 +8,6 @@ const CompanySchema = new Schema(
     },
     logo: {
       type: String,
-      required: true,
     },
     address: {
       type: String,
@@ -21,7 +20,6 @@ const CompanySchema = new Schema(
     images: [
       {
         type: String,
-        required: true,
       },
     ],
   },
