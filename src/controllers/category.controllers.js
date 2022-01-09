@@ -23,8 +23,15 @@ const getAll =  async (req, res) => {
   }
 };
 
+const productsByCategory = async (req, res) => {
+  const { category_id } = req.params;
+  const category = await models.category.findById(category_id).populate('products');
+
+   res.status(200).json(category.products);
+}
 
 module.exports = {
     create, 
-    getAll
+    getAll,
+    productsByCategory
 }

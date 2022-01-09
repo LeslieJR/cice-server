@@ -10,11 +10,13 @@ const create = async (req, res) => {
       price,
     };
     //verify if the category is already present
-    const isCategoryValid = await models.category.findById(category_id);
-    if (!isCategoryValid) {
+    const categoryValid = await models.category.findById(category_id);
+    if (!categoryValid) {
       return res.status(400).json("This category is not valid");
     }
     const product = await models.product.create(newProduct);
+    categoryValid.products.push(product);
+    await categoryValid.save();
     return res.status(200).json(product);
   } catch (e) {
     console.log("error: ", e.message);
@@ -30,15 +32,11 @@ const getAll =  async (req, res) => {
   }
 };
 
-const getByCategory = async (req, res) => {
-  try {
-    // TO DO
-    return res.status(200).json(products);
-  } catch (e) {
-    console.log("error: ", e.message);
-  }
-};
-
+const productsByCategory = async (req,res)=>{
+  const { category_id } = req.params;
+  const productsByCategory = await models.category.findById(category_id).populate('products');
+  res.status(200).json(productsByCategory);
+}
 const remove = async (req, res) => {
   try {
     const { product_id } = req.params;
@@ -56,6 +54,6 @@ const remove = async (req, res) => {
 module.exports = {
   create,
   getAll,
-  getByCategory,
+  productsByCategory,
   remove
 };

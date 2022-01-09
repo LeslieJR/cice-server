@@ -10,7 +10,13 @@ const CategorySchema = new Schema(
     description: {
       type: String,
       required: true,
-    }
+    },
+    products : [
+      {
+        type: Schema.Types.ObjectId,
+        ref:'Product'
+      }
+  ]
   },
   {
     versionKey: false,
