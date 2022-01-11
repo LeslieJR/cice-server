@@ -1,5 +1,7 @@
 const models = require("../models");
 const helpers = require("../helpers");
+const config = require("../config")
+const jwt = require("jsonwebtoken");
 
 //to sign up a user
 const signup = async (req, res) => {
@@ -27,6 +29,7 @@ const signup = async (req, res) => {
     }
   } catch (e) {
     console.log("error: ", e.message);
+    return res.json({ err: e.message})
   }
 };
 
@@ -42,24 +45,28 @@ const signin = async (req, res) => {
     if (!isValid) {
       return res.status(400).json("Wrong password");
     }
-    return res.status(200).json("Login successful");
+    const data = { email: user.email };
+    const token = jwt.sign(data, config.jwt.secret);
+    return res.status(200).json({token, email: user.email});
   } catch (e) {
     console.log("error: ", e.message);
+    return res.json({ err: e.message})
   }
 };
 
 //to add user details 
 const addDetails = async (req, res) => {
   try {
-    const { city, postal_code, country, mobile } = req.body;
+    const { city, postal_code, country, mobile, data } = req.body;
+    const email = data.email;
     const filter = {email};
     const update = {
       address: {
         city,
         postal_code,
-        country,
-        mobile
-      }
+        country
+      },
+      mobile
     }
     const user = await models.user.findOneAndUpdate(filter, update, {
       new: true
@@ -67,10 +74,10 @@ const addDetails = async (req, res) => {
     if (!user) {
       return res.status(400).json("This user does NOT exist");
     }
-    
     return res.status(200).json(user);
   } catch (e) {
     console.log("error: ", e.message);
+    return res.json({ err: e.message})
   }
 };
 

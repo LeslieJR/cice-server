@@ -3,10 +3,11 @@ const {Router} = require('express');
 const router = Router();
 const controllers = require('../controllers');
 const passport = require('passport');
+const helpers = require("../helpers")
 
 router.post('/sign-up', controllers.user.signup);
 router.post('/sign-in', controllers.user.signin);
-router.post('/:user_id/details', controllers.user.addDetails)
+router.post('/add-details', helpers.isTokenValid.isTokenValid, controllers.user.addDetails)
 
 //auth with google
 router.get('/google', passport.authenticate('google', {

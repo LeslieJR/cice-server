@@ -2,10 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const UserSchema = new Schema(
   {
-    //when the user uses google to sign in 
-    google_id:{
-      type:String
+    //when the user uses google to sign in
+    google_id: {
+      type: String,
     },
+
     first_name: {
       type: String,
       required: true,
@@ -17,11 +18,25 @@ const UserSchema = new Schema(
     email: {
       type: String,
       required: true,
-      unique:true
+      unique: true,
     },
     password: {
       type: String,
       required: true,
+    },
+    address: {
+      city: {
+        type: String,
+      },
+      postal_code: {
+        type: String,
+      },
+      country: {
+        type: String,
+      },
+    },
+    mobile: {
+      type: Number,
     },
     code: {
       type: String,
@@ -34,11 +49,7 @@ const UserSchema = new Schema(
     active: {
       type: Boolean,
       default: false,
-    },
-    user_details: {
-      type: Schema.Types.ObjectId,
-      ref: "User_details",
-    },
+    }
   },
   {
     versionKey: false,
