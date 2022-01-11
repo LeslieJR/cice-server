@@ -19,6 +19,7 @@ server.use(morgan('dev'))
 //Routes
 server.use('/auth', routes.user)
 server.use('/api/product', routes.product)
+server.use('/api/order', routes.order)
 server.use('/api/company', routes.company)
 server.use('/api/category', routes.category)
 

@@ -45,7 +45,7 @@ const signin = async (req, res) => {
     if (!isValid) {
       return res.status(400).json("Wrong password");
     }
-    const data = { email: user.email };
+    const data = { email: user.email, user_id: user._id };
     const token = jwt.sign(data, config.jwt.secret);
     return res.status(200).json({token, email: user.email});
   } catch (e) {
