@@ -38,6 +38,7 @@ const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await models.user.findOne({ email });
+    console.log(JSON.stringify(user))
     if (!user) {
       return res.status(400).json("This user does NOT exist");
     }
