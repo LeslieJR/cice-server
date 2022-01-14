@@ -20,42 +20,43 @@ const create = async (req, res) => {
     return res.status(200).json(product);
   } catch (e) {
     console.log("error: ", e.message);
-    return res.json({ err: e.message})
+    return res.json({ err: e.message });
   }
 };
 //to get all products
-const getAll =  async (req, res) => {
+const getAll = async (req, res) => {
   try {
-    const products = await models.product.find().populate('category_id');
+    const products = await models.product.find().populate("category_id");
     return res.status(200).json(products);
   } catch (e) {
     console.log("error: ", e.message);
-    return res.json({ err: e.message})
+    return res.json({ err: e.message });
   }
 };
 //to get products by category
-const productsByCategory = async (req,res)=>{
-  try{
+const productsByCategory = async (req, res) => {
+  try {
     const { category_id } = req.params;
-    const productsByCategory = await models.category.findById(category_id).populate('products');
+    const productsByCategory = await models.category
+      .findById(category_id)
+      .populate("products");
     res.status(201).json(productsByCategory);
-  }catch(e){
+  } catch (e) {
     console.log("error: ", e.message);
-    return res.json({ err: e.message})
+    return res.json({ err: e.message });
   }
-  
-}
+};
 //to get product by id
 const productById = async (req, res) => {
-  try{
+  try {
     const { product_id } = req.params;
     const productById = await models.product.findById(product_id);
-    res.status(201).json(productById)
-  }catch(e){
+    res.status(201).json(productById);
+  } catch (e) {
     console.log("error: ", e.message);
-    return res.json({ err: e.message})
-  } 
-}
+    return res.json({ err: e.message });
+  }
+};
 //to delete product by id
 const deleteProduct = async (req, res) => {
   try {
@@ -64,11 +65,11 @@ const deleteProduct = async (req, res) => {
     if (!product) {
       return res.json({ error: "PRODUCT DOES NOT EXIST" });
     }
-    await models.product.findByIdAndRemove(product_id)
+    await models.product.findByIdAndRemove(product_id);
     return res.status(200).json({ msg: "product deleted" });
   } catch (e) {
     console.log("error: ", e.message);
-    return res.json({ err: e.message})
+    return res.json({ err: e.message });
   }
 };
 
@@ -77,5 +78,5 @@ module.exports = {
   getAll,
   productsByCategory,
   productById,
-  deleteProduct
+  deleteProduct,
 };

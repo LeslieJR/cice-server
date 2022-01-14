@@ -22,7 +22,6 @@ const ProductSchema = new Schema(
     images: [
       {
         type: String,
-        
       },
     ],
     quantity: {

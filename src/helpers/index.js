@@ -1,6 +1,6 @@
 const bcrypt = require("./bcrypt.helpers");
 const isTokenValid = require("./validation.helper");
-module.exports={
-    bcrypt,
-    isTokenValid
-}
+module.exports = {
+  bcrypt,
+  isTokenValid,
+};

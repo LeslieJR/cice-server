@@ -6,7 +6,7 @@ const UserSchema = new Schema(
     google_id: {
       type: String,
     },
-
+    
     first_name: {
       type: String,
       required: true,
@@ -49,7 +49,7 @@ const UserSchema = new Schema(
     active: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   {
     versionKey: false,

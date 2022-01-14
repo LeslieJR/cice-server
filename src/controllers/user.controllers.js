@@ -1,6 +1,6 @@
 const models = require("../models");
 const helpers = require("../helpers");
-const config = require("../config")
+const config = require("../config");
 const jwt = require("jsonwebtoken");
 
 //to sign up a user
@@ -29,7 +29,7 @@ const signup = async (req, res) => {
     }
   } catch (e) {
     console.log("error: ", e.message);
-    return res.json({ err: e.message})
+    return res.json({ err: e.message });
   }
 };
 
@@ -38,7 +38,7 @@ const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await models.user.findOne({ email });
-    console.log(JSON.stringify(user))
+    console.log(JSON.stringify(user));
     if (!user) {
       return res.status(400).json("This user does NOT exist");
     }
@@ -48,29 +48,29 @@ const signin = async (req, res) => {
     }
     const data = { email: user.email, user_id: user._id };
     const token = jwt.sign(data, config.jwt.secret);
-    return res.status(200).json({token, email: user.email});
+    return res.status(200).json({ token, email: user.email });
   } catch (e) {
     console.log("error: ", e.message);
-    return res.json({ err: e.message})
+    return res.json({ err: e.message });
   }
 };
 
-//to add user details 
+//to add user details
 const addDetails = async (req, res) => {
   try {
     const { city, postal_code, country, mobile, data } = req.body;
     const email = data.email;
-    const filter = {email};
+    const filter = { email };
     const update = {
       address: {
         city,
         postal_code,
-        country
+        country,
       },
-      mobile
-    }
+      mobile,
+    };
     const user = await models.user.findOneAndUpdate(filter, update, {
-      new: true
+      new: true,
     });
     if (!user) {
       return res.status(400).json("This user does NOT exist");
@@ -78,12 +78,12 @@ const addDetails = async (req, res) => {
     return res.status(200).json(user);
   } catch (e) {
     console.log("error: ", e.message);
-    return res.json({ err: e.message})
+    return res.json({ err: e.message });
   }
 };
 
 module.exports = {
   signup,
   signin,
-  addDetails
+  addDetails,
 };

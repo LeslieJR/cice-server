@@ -5,18 +5,18 @@ const CategorySchema = new Schema(
     name: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     description: {
       type: String,
       required: true,
     },
-    products : [
+    products: [
       {
         type: Schema.Types.ObjectId,
-        ref:'Product'
-      }
-  ]
+        ref: "Product",
+      },
+    ],
   },
   {
     versionKey: false,
