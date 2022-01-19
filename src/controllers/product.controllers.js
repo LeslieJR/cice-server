@@ -2,22 +2,24 @@ const models = require("../models");
 //to create a product
 const create = async (req, res) => {
   try {
-    const { name, description, category_id, price } = req.body;
+    const { name, description, category, price, images } = req.body;
+    
     const newProduct = {
       name,
       description,
-      category: category_id,
+      category,
       price,
+      images
     };
     //verify if the category is already present
-    const categoryValid = await models.category.findById(category_id);
+    const categoryValid = await models.category.findById(category);
     if (!categoryValid) {
       return res.status(400).json("This category is not valid");
     }
     const product = await models.product.create(newProduct);
     categoryValid.products.push(product);
     await categoryValid.save();
-    return res.status(200).json(product);
+    return res.status(200).json({product}); 
   } catch (e) {
     console.log("error: ", e.message);
     return res.json({ err: e.message });
@@ -26,7 +28,7 @@ const create = async (req, res) => {
 //to get all products
 const getAll = async (req, res) => {
   try {
-    const products = await models.product.find().populate("category_id");
+    const products = await models.product.find().populate("category");
     return res.status(200).json(products);
   } catch (e) {
     console.log("error: ", e.message);

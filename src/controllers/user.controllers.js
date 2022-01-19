@@ -6,8 +6,8 @@ const jwt = require("jsonwebtoken");
 //to sign up a user
 const signup = async (req, res) => {
   try {
-    const { first_name, last_name, email, password, password2 } = req.body;
-    if (!first_name || !last_name || !email || !password || !password2) {
+    const { first_name, email, password, password2 } = req.body;
+    if (!first_name || !email || !password || !password2) {
       return res.status(400).json("Required fields are empty");
     }
     if (password !== password2) {
@@ -20,7 +20,6 @@ const signup = async (req, res) => {
       const hash = await helpers.bcrypt.encrypt(password);
       const newUser = {
         first_name,
-        last_name,
         email,
         password: hash,
       };
@@ -40,11 +39,11 @@ const signin = async (req, res) => {
     const user = await models.user.findOne({ email });
     console.log(JSON.stringify(user));
     if (!user) {
-      return res.status(400).json("This user does NOT exist");
+      return res.status(400).json({err:"This user does NOT exist"});
     }
     const isValid = await helpers.bcrypt.compare(password, user.password);
     if (!isValid) {
-      return res.status(400).json("Wrong password");
+      return res.status(400).json({err:"Wrong password"});
     }
     const data = { email: user.email, user_id: user._id };
     const token = jwt.sign(data, config.jwt.secret);
