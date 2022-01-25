@@ -17,6 +17,10 @@ const CategorySchema = new Schema(
         ref: "Product",
       },
     ],
+    color:{
+      type:String,
+      unique: true
+    }
   },
   {
     versionKey: false,

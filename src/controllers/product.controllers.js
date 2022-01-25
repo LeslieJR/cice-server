@@ -26,9 +26,11 @@ const create = async (req, res) => {
   }
 };
 //to get all products
-const getAll = async (req, res) => {
+const getRecents = async (req, res) => {
   try {
-    const products = await models.product.find().populate("category");
+    const products = await models.product.find().sort({
+      createdAt: "desc",
+    }).limit(6).populate("category");
     return res.status(200).json(products);
   } catch (e) {
     console.log("error: ", e.message);
@@ -77,7 +79,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   create,
-  getAll,
+  getRecents,
   productsByCategory,
   productById,
   deleteProduct,
