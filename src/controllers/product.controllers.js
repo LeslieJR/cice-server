@@ -2,8 +2,7 @@ const models = require("../models");
 //to create a product
 const create = async (req, res) => {
   try {
-    const { name, description, category, price, images } = req.body;
-    
+    const { name, description, category, price, images } = req.body; 
     const newProduct = {
       name,
       description,
@@ -16,6 +15,9 @@ const create = async (req, res) => {
     if (!categoryValid) {
       return res.status(400).json("This category is not valid");
     }
+  /* if(images){
+      return res.status(400).json("You need to upload more than one images");
+    } */
     const product = await models.product.create(newProduct);
     categoryValid.products.push(product);
     await categoryValid.save();
