@@ -27,8 +27,7 @@ const signup = async (req, res) => {
       return res.status(201).json(user);
     }
   } catch (e) {
-    console.log("error: ", e.message);
-    return res.json({ err: e.message });
+    return res.status(400).json({ err: e.message });
   }
 };
 
@@ -49,8 +48,7 @@ const signin = async (req, res) => {
     const token = jwt.sign(data, config.jwt.secret);
     return res.status(200).json({ token, email: user.email });
   } catch (e) {
-    console.log("error: ", e.message);
-    return res.json({ err: e.message });
+    return res.status(400).json(e.message);
   }
 };
 
@@ -76,8 +74,7 @@ const addDetails = async (req, res) => {
     }
     return res.status(200).json(user);
   } catch (e) {
-    console.log("error: ", e.message);
-    return res.json({ err: e.message });
+    return res.status(400).json(e.message);
   }
 };
 

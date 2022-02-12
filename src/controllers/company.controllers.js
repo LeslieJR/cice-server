@@ -12,7 +12,7 @@ const create = async (req, res) => {
     const company = await models.company.create(newCompany);
     return res.status(200).json(company);
   } catch (e) {
-    console.log("error: ", e.message);
+    return res.status(400).json(e.message);
   }
 };
 

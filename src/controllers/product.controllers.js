@@ -23,8 +23,7 @@ const create = async (req, res) => {
     await categoryValid.save();
     return res.status(200).json({product}); 
   } catch (e) {
-    console.log("error: ", e.message);
-    return res.json({ err: e.message });
+    return res.status(400).json(e.message);
   }
 };
 //to get all products
@@ -35,8 +34,7 @@ const getRecents = async (req, res) => {
     }).limit(6).populate("category");
     return res.status(200).json(products);
   } catch (e) {
-    console.log("error: ", e.message);
-    return res.json({ err: e.message });
+    return res.status(400).json(e.message);
   }
 };
 //to get products by category
@@ -48,8 +46,7 @@ const productsByCategory = async (req, res) => {
       .populate("products");
     res.status(201).json(productsByCategory);
   } catch (e) {
-    console.log("error: ", e.message);
-    return res.json({ err: e.message });
+    return res.status(400).json(e.message);
   }
 };
 //to get product by id
@@ -59,8 +56,7 @@ const productById = async (req, res) => {
     const productById = await models.product.findById(product_id);
     res.status(201).json(productById);
   } catch (e) {
-    console.log("error: ", e.message);
-    return res.json({ err: e.message });
+    return res.status(400).json(e.message);
   }
 };
 //to delete product by id
@@ -74,8 +70,7 @@ const deleteProduct = async (req, res) => {
     await models.product.findByIdAndRemove(product_id);
     return res.status(200).json({ msg: "product deleted" });
   } catch (e) {
-    console.log("error: ", e.message);
-    return res.json({ err: e.message });
+    return res.status(400).json(e.message);
   }
 };
 

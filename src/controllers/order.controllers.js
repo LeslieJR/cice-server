@@ -85,8 +85,7 @@ const deleteOrder = async (req, res) => {
       return res.status(201).json("Order deleted");
     }
   } catch (e) {
-    console.log("error: ", e.message);
-    return res.json({ err: e.message });
+    return res.status(400).json(e.message);
   }
 };
 
