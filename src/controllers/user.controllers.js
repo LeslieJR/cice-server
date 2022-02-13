@@ -8,14 +8,14 @@ const signup = async (req, res) => {
   try {
     const { first_name, email, password, password2 } = req.body;
     if (!first_name || !email || !password || !password2) {
-      return res.status(400).json("Required fields are empty");
+      return res.status(400).json({err:"Required fields are empty"});
     }
     if (password !== password2) {
-      return res.status(400).json("Password do not match");
+      return res.status(400).json({err:"Password do not match"});
     }
     const userExist = await models.user.findOne({ email });
     if (userExist) {
-      return res.status(400).json("User already present");
+      return res.status(400).json({err:"User already present"});
     } else {
       const hash = await helpers.bcrypt.encrypt(password);
       const newUser = {
@@ -27,7 +27,7 @@ const signup = async (req, res) => {
       return res.status(201).json(user);
     }
   } catch (e) {
-    return res.status(400).json({ err: e.message });
+    return res.status(400).json({err:e.message});
   }
 };
 
@@ -36,7 +36,6 @@ const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await models.user.findOne({ email });
-    console.log(JSON.stringify(user));
     if (!user) {
       return res.status(400).json({err:"This user does NOT exist"});
     }
@@ -48,7 +47,7 @@ const signin = async (req, res) => {
     const token = jwt.sign(data, config.jwt.secret);
     return res.status(200).json({ token, email: user.email });
   } catch (e) {
-    return res.status(400).json(e.message);
+    return res.status(400).json({err:e.message});
   }
 };
 
@@ -70,11 +69,11 @@ const addDetails = async (req, res) => {
       new: true,
     });
     if (!user) {
-      return res.status(400).json("This user does NOT exist");
+      return res.status(400).json({err:"This user does NOT exist"});
     }
     return res.status(200).json(user);
   } catch (e) {
-    return res.status(400).json(e.message);
+    return res.status(400).json({err:e.message});
   }
 };
 

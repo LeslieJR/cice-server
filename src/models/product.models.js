@@ -21,12 +21,16 @@ const ProductSchema = new Schema(
       max: 100,
       required: true,
     },
-    images:[
-      {
-        type: String,
-        required: true
-      }
-    ],
+    images: {
+      type: [String],
+      required: true,
+      validate: {
+        validator: function (v) {
+          return Array.isArray(v) && v.length > 0;
+        },
+        message: "At least one image is required",
+      },
+    },
     quantity: {
       type: Number,
     },

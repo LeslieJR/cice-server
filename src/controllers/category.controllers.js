@@ -4,7 +4,7 @@ const create = async (req, res) => {
   try {
     const { name, description, color } = req.body;
     if(!name || !description || !color){
-      return res.status(400).json('Required fields missing')
+      return res.status(400).json({err:'Required fields missing'});
     }
     const newCategory = {
       name,
@@ -14,7 +14,7 @@ const create = async (req, res) => {
     const category = await models.category.create(newCategory);
     return res.status(200).json(category);
   } catch (e) {
-    return res.status(400).json(e.message);
+    return res.status(400).json({err:e.message});
   }
 };
 
@@ -23,7 +23,7 @@ const getAll = async (req, res) => {
     const categories = await models.category.find();
     return res.status(200).json(categories);
   } catch (e) {
-    return res.status(400).json(e.message);
+    return res.status(400).json({err:e.message});
   }
 };
 
@@ -33,7 +33,7 @@ const productsByCategory = async (req, res) => {
     const category = await models.category.findById(category_id).populate("products");
     return res.status(200).json(category.products);  
   }catch(e){
-    return res.status(400).json(e.message);
+    return res.status(400).json({err:e.message});
   }
 
 };
