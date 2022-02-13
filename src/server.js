@@ -11,8 +11,8 @@ const server = express();
 server.set("port", config.server.port);
 
 //Middlewares
-server.use(express.urlencoded({ extended: false }));
-server.use(express.json());
+server.use(express.urlencoded({ extended: false, limit: "50mb" }));
+server.use(express.json({ limit: "50mb" }));;
 server.use(cors());
 server.use(morgan("dev"));
 
